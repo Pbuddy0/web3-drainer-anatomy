@@ -56,7 +56,7 @@ User prompt: I need just a brief summary of how attackers do these and why my ch
 Response: How the Attack Operates
 1. Malicious Trigger: The attacker uses social engineering (a link offering a free claim, airdrop, or mint) to trick the user into connecting their wallet.
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 5/13CommentHighlight
+CommentHighlight
 2. Deceptive Request: Instead of requesting a simple transaction, the site requests a signature for an off-chain message (EIP-712 permit) or an
 on-chain state change (approve(address spender, uint256.max)). The interface obfuscates what is actually happening.
 3. Exploitation of State:
@@ -104,7 +104,7 @@ explicitly (though unknowingly) authorized it.
 3. Smart Contract Wallets (Account Abstraction - ERC-4337)
 Targets: Safe (formerly Gnosis Safe), Argent.
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 6/13
+
 Vulnerability: These are the most resilient but not entirely immune. They can enforce rules like daily spending limits, multi-signature
 requirements, and auto-revocation of allowances. However, if an attacker tricks enough signers (in a multi-sig setup) or convinces a single
 owner to authorize a transaction within their spending limit, funds can still be drained up to that threshold.
@@ -152,7 +152,7 @@ The "Smart EOA" Problem
 Before EIP-7702 (which went live on Ethereum mainnet in May 2025 as part of the Pectra upgrade), standard wallets (Externally Owned Accounts or
 EOAs) were "dumb." They could only hold tokens, sign messages, and send transactions. They could not execute logic.
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 7/13
+
 EIP-7702 introduced a new transaction type that allows a standard wallet to temporarily "borrow" the code of a smart contract. This was designed to be a
 massive UX improvement—it allows standard wallets to batch transactions (e.g., approve and swap in one click) or have third parties pay their gas fees
 without forcing users to migrate to complex smart contract wallets.
@@ -201,7 +201,7 @@ installing a persistent back door.
 Impact on the Account Abstraction Roadmap
 This vulnerability forces a harsh realization at the protocol level: patching legacy EOAs with smart contract features is inherently dangerous.
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 8/13
+
 When structuring your defensive architecture, draw a hard line between these two implementations:
 Native Smart Accounts (Safe, Argent): These are deployed natively as smart contracts. They do not rely on an EOA private key for base-layer
 execution, nor do they use EIP-7702 delegation. Their security goals remain entirely intact.
@@ -249,7 +249,7 @@ Forensic Artifacts: Before deploying, attackers often obfuscate the core drainer
 signature requests) to prevent security researchers from easily analyzing it. Finding the un-obfuscated source code alongside the obfuscated
 output is strong evidence of authorship.
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 9/13
+
 API Interactions: Postman, Insomnia, curl commands.
 Forensic Artifacts: Saved API requests hitting blockchain RPC nodes (Infura, Alchemy, QuickNode) to test balance checking scripts, or
 requests sending test payloads to Discord/Telegram webhooks.
@@ -292,7 +292,7 @@ Project Workspace Terms: drainer, phish, claim-site, airdrop-frontend, wallet-co
 4. NPM Packages & Code Keywords (package.json)
 If source code or a Node project is found, search inside package.json or recursively search for these string values in .js / .ts files:
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 10/13
+
 EVM Interaction Libraries: ethers, web3, viem, @wagmi/core, @rainbow-me/rainbowkit, @web3modal/ethereum.
 Code Obfuscation Dependencies: javascript-obfuscator, terser, webpack-obfuscator.
 Webhook / Exfiltration Libraries: axios, node-fetch, discord.js, telegraf (Telegram bot library).
@@ -333,4 +333,4 @@ When these repositories do get taken down, it is rarely because the code itself 
 DMCA Copyright Strikes: Many drainer authors steal front-end code from legitimate Web3 projects (e.g., ripping the UI of a popular decentralized
 exchange). The legitimate project can file a DMCA takedown against the repository for copyright infringement, forcing GitHub to remove it.
 8/17/26, 4:23 AM UNIDRIVE Login Portal Analysis
-https://gemini.google.com/app/0d2d3d66a17755a0 11/13
+

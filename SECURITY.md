@@ -19,7 +19,7 @@ Contributions that cross this line will be declined regardless of technical qual
 If content here is factually wrong, could be weaponized more easily than intended, or
 infringes your rights:
 
-- Open a [GitHub issue](../../issues) for factual corrections and improvements, **or**
+- Open a [GitHub issue](https://github.com/Pbuddy0/web3-drainer-anatomy/issues) for factual corrections and improvements, **or**
 - For sensitive reports (e.g., something here enables abuse), email the maintainer via the
   address on the GitHub profile rather than opening a public issue.
 
