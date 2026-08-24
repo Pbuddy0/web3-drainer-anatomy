@@ -1,0 +1,25 @@
+# .env and secrets — never commit
+.env
+.env.*
+*.key
+*key*.json
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+build/
+cache/
+artifacts/
+typechain-types/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local test state
+deployed_addresses.local.json
+*.log

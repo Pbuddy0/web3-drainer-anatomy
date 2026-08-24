@@ -1,0 +1,39 @@
+LICENSE AGREEMENT
+=================
+
+Web3 Drainer Anatomy — Educational Content License
+
+1. The written documentation, diagrams, and analysis in this repository are
+   licensed to the public under the Creative Commons Attribution-NonCommercial-
+   ShareAlike 4.0 International Public License ("CC BY-NC-SA 4.0").
+
+   A human-readable summary and the full legal code are available at:
+   https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+   In short: you may share and adapt this material for any non-commercial
+   purpose, provided you give appropriate credit, link the license, and
+   indicate if changes were made. Derivatives must carry the same license.
+
+2. Code contained in this repository (the `exercises/` folder) is additionally
+   made available under the MIT License for educational use:
+
+   Permission is hereby granted, free of charge, to any person obtaining a
+   copy of this software, to deal in the Software without restriction,
+   including without limitation the rights to use, copy, modify, merge,
+   publish, distribute, sublicense, and/or sell copies of the Software,
+   subject to the following condition:
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   THE SOFTWARE.
+
+3. Acceptable-use condition (applies to all content).
+
+   This material is provided for education and defensive security research.
+   Using it to take funds, signatures, credentials, or control of systems or
+   wallets you do not own is outside the granted license and, separately,
+   illegal in most jurisdictions.

