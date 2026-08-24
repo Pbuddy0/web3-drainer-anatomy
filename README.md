@@ -116,6 +116,12 @@ PRs welcome — corrections, new vector write-ups, diagrams, translations. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the one hard rule (no deployable tooling), style
 conventions, and the issue templates. Open an issue first for big additions.
 
+## Author
+
+Built and maintained by [**Progress Louya**](https://github.com/Pbuddy0) — security educator.
+Questions about using this material in a course or workshop? Open a
+[Discussion](https://github.com/Pbuddy0/web3-drainer-anatomy/discussions).
+
 ## License
 
 Documentation and exercises are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
