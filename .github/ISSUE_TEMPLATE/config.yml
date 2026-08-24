@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & discussion
+    url: https://github.com/Pbuddy0/web3-drainer-anatomy/discussions
+    about: Ask questions about vectors, defense, or how to use the material in a course.

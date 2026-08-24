@@ -1,0 +1,44 @@
+name: New attack-vector write-up
+description: Propose a deep-dive on a drain vector we don't cover yet (analysis only)
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Great additions are vectors that are (a) actively used in the wild, and
+        (b) teach a transferable lesson about signatures, approvals, or trust.
+  - type: checkboxes
+    id: ethics
+    attributes:
+      label: Ethics gate (both required)
+      options:
+        - label: This proposal is analytical — it explains how the vector works, not how to run it
+          required: true
+        - label: It does not request or include deployable attack code, lure pages, or relay infra
+          required: true
+  - type: input
+    id: vector
+    attributes:
+      label: Vector name / mechanism
+      placeholder: e.g. ERC-1271 signature forgery against vulnerable smart wallets
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters now
+      description: Real-world usage, affected wallets/tokens, links to incidents or research.
+    validations:
+      required: true
+  - type: textarea
+    id: defense
+    attributes:
+      label: Detection & defense angle
+      description: How would a wallet user, dapp dev, or monitoring pipeline catch this?
+    validations:
+      required: true
+  - type: input
+    id: sources
+    attributes:
+      label: Key sources
+      placeholder: EIP numbers, postmortems, blog analyses

@@ -23,3 +23,7 @@ Thumbs.db
 # Local test state
 deployed_addresses.local.json
 *.log
+
+# Launch prep — kept local on purpose (shipping promo plans undermines authenticity)
+marketing/
+PUBLISH_CHECKLIST.md

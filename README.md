@@ -1,10 +1,12 @@
 # web3-drainer-anatomy
 
+<img src="assets/banner.svg" alt="Web3 Drainer Anatomy — one valid signature is all it takes" width="100%">
+
 **A developer's field guide to how modern wallet drainers actually work — and how to stop them.**
 
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey)](./LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](#contributing)
-[![Scope](https://img.shields.io/badge/scope-education%20only-red)]
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](./CONTRIBUTING.md)
+[![Scope](https://img.shields.io/badge/scope-education%20only-red)](#faq)
 
 ---
 
@@ -110,8 +112,9 @@ Yes — see the license (CC BY-NC-SA 4.0): share and adapt freely with attributi
 
 ## Contributing
 
-PRs welcome: new vector write-ups, better diagrams, translations, corrections. Please keep the
-repo's line in mind — analysis yes, deployable tooling no. Open an issue first for big additions.
+PRs welcome — corrections, new vector write-ups, diagrams, translations. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for the one hard rule (no deployable tooling), style
+conventions, and the issue templates. Open an issue first for big additions.
 
 ## License
 

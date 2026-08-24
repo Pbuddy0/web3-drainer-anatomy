@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: Web3 Drainer Anatomy — A Developer's Field Guide to Wallet-Draining Attacks
+message: >-
+  Educational material explaining how modern Web3 phishing and
+  signature-based wallet-draining attacks work at the payload level,
+  with detection heuristics and layered defenses.
+type: generic
+authors:
+  - name: Pbuddy0
+website: https://github.com/Pbuddy0/web3-drainer-anatomy
+repository-code: https://github.com/Pbuddy0/web3-drainer-anatomy
+license: CC-BY-NC-SA-4.0
+keywords:
+  - web3-security
+  - ethereum
+  - phishing
+  - wallet-security
+  - signatures

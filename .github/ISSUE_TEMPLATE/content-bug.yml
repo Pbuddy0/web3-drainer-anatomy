@@ -1,0 +1,38 @@
+name: Content bug / correction
+description: Report a factual error, outdated claim, broken link, or unclear explanation
+labels: ["documentation", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the field guide. Precision matters a lot here —
+        wrong claims in security education are worse than missing ones.
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: File path and section, e.g. `docs/05-red-team-report.md` § "EIP-7702"
+      placeholder: docs/05-red-team-report.md § EIP-7702
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: Quote the current text and explain the error.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / source
+      description: Link documentation, EIPs, transaction traces, or research supporting your correction.
+    validations:
+      required: false
+  - type: textarea
+    id: fix
+    attributes:
+      label: Suggested fix
+      description: The replacement wording, if you have one.
+    validations:
+      required: false
